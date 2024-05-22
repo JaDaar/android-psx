@@ -1,16 +1,34 @@
 # psx
 
-A new Flutter project.
+PSX is a Simple Password Management Application.
+It is designed to be run on the Android platform, but can also be executed on Windows and the Web.  
 
-## Getting Started
+# Versions
+## Version 1 - COMPLETED
+The user can enter an account, login name and password - along with password validation.
+Then this can be saved - to an in memory list.
+Save pops up a toaster message.
+Clears data from screen.
+The data is not stored in the database, but an array of a type<T>
+Change Password and Validation input to secure input TextField, obscure.
 
-This project is a starting point for a Flutter application.
+## Version 2
+Add page navigation, use PlaceHolder() page.
+One Page will be to add new information, the other page will be to list stored information.
+The user can scroll through the saved login/password combinations on another screen.
 
-A few resources to get you started if this is your first Flutter project:
+## Version 3
+Implement an encryption algorithm.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Version 4
+Add authentication to the system.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Version 4
+Information is stored locally.
+Create an About Page, with Version Information.
+
+## Version 5
+Store the information into the cloud.
+
+
