@@ -2,7 +2,7 @@ import 'package:psx/models/psxUserInfo.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
-  List<PSXUserInfo> items = [];
+  List<PSXUserInfo> _psxUserInfo = [];
 
   factory DataService() {
     return _instance;
@@ -10,11 +10,23 @@ class DataService {
 
   DataService._internal();
 
-  void populateItems(List<PSXUserInfo> newItems) {
-    items = newItems;
+  List<PSXUserInfo> get psxUserInfo => _psxUserInfo;
+
+  void setPsxUserInfo(List<PSXUserInfo> newList) {
+    _psxUserInfo = newList;
   }
 
-  List<PSXUserInfo> getItems() {
-    return items;
+  void addPsxUserInfo(PSXUserInfo newItem) {
+    _psxUserInfo.add(newItem);
+  }
+
+  List<PSXUserInfo> getItems() => _psxUserInfo;
+
+  void removePsxUserInfo(PSXUserInfo item) {
+    _psxUserInfo.remove(item);
+  }
+
+  void clearPsxUserInfo() {
+    _psxUserInfo.clear();
   }
 }

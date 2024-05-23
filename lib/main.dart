@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:psx/services/data_service.dart';
+import 'package:psx/widgets/accountList.dart';
 
 import 'package:psx/widgets/accountManagement.dart';
 
@@ -38,6 +40,13 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   var navigationLandingIndex = 0;
+  final DataService _dataService = DataService();
+
+  @override
+  void initState() {
+    super.initState();
+    _dataService.setPsxUserInfo([]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
         page = Placeholder();
         break;
       case 1:
-        page = Placeholder();
+        page = AccountList();
         break;
       case 2:
         //page = Placeholder(); // a flutter page for helping in development

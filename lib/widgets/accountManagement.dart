@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psx/models/psxUserInfo.dart';
+import 'package:psx/services/data_service.dart';
 
 class AccountManagementPage extends StatefulWidget {
   const AccountManagementPage({super.key});
@@ -10,13 +11,14 @@ class AccountManagementPage extends StatefulWidget {
 }
 
 class _AccountManagementPageState extends State<AccountManagementPage> {
+  final DataService _dataService = DataService();
+
   var pageNavigationIndex = 0;
   final psxAccountNameController = TextEditingController();
   final psxNameController = TextEditingController();
   // Create a TextEditingController for passwords
   final psxController = TextEditingController();
   final psxValidationController = TextEditingController();
-  List<PSXUserInfo> psxUserInfo = [];
 
   bool _obscureText = true;
   bool _obscureTextValidation = true;
@@ -74,7 +76,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
     //save into array
     var record = PSXUserInfo(
         accountName: psxAccountName, login: psxNameText, password: psxCodeText);
-    psxUserInfo.add(record);
+    _dataService.addPsxUserInfo(record);
 
     // Clear Controls of Data
     psxAccountName = '';
@@ -89,19 +91,6 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    switch (pageNavigationIndex) {
-      case 0:
-        page = Placeholder();
-        break;
-      case 1:
-        //page = Placeholder(); // a flutter page for helping in development
-        page = AccountManagementPage();
-        break;
-      default:
-        throw UnimplementedError('no widget for $pageNavigationIndex');
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('PSX Store'),
