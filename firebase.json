@@ -1,0 +1,25 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "psxauthenticator",
+                    "appId": "1:1075574369837:android:783ef65736249403d852a4",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "psxauthenticator",
+                    "configurations": {
+                        "android": "1:1075574369837:android:783ef65736249403d852a4",
+                        "ios": "1:1075574369837:ios:cc1c8973dbecf75bd852a4",
+                        "macos": "1:1075574369837:ios:cc1c8973dbecf75bd852a4",
+                        "web": "1:1075574369837:web:f6062891ebc610ccd852a4",
+                        "windows": "1:1075574369837:web:97651058e84a144fd852a4"
+                    }
+                }
+            }
+        }
+    }
+}

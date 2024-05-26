@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1075574369837",
+    "project_id": "psxauthenticator",
+    "storage_bucket": "psxauthenticator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075574369837:android:783ef65736249403d852a4",
+        "android_client_info": {
+          "package_name": "com.psx.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Ff1FOu9jHX0kSEKwSrr3agS6Vtm5CBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

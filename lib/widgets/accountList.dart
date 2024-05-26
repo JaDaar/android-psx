@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:psx/models/psxUserInfo.dart';
 import 'package:psx/services/data_service.dart';
+import 'package:psx/widgets/accountManagement.dart';
 
-class AccountList extends StatefulWidget {
-  const AccountList({super.key});
+class AccountListPage extends StatefulWidget {
+  const AccountListPage({super.key});
 
   @override
-  State<AccountList> createState() => _AccountListState();
+  State<AccountListPage> createState() => _AccountListPageState();
 }
 
-class _AccountListState extends State<AccountList> {
+class _AccountListPageState extends State<AccountListPage> {
   final DataService _dataService = DataService();
 
   List<PSXUserInfo> _items = [];
@@ -24,16 +25,41 @@ class _AccountListState extends State<AccountList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _items.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-            title: Text(_items[index].accountName),
-            subtitle: Column(children: [
-              Text(_items[index].login),
-              Text(_items[index].password),
-            ]));
-      },
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Account Information'),
+        ),
+        body: ListView.builder(
+          itemCount: _items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                _items[index].accountName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Padding(
+                padding: EdgeInsets.only(left: 25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(_items[index].login),
+                    SizedBox(height: 4.0),
+                    Text(_items[index].password),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AccountManagementPage()),
+              );
+            },
+            child: Icon(Icons.add)));
   }
 }
