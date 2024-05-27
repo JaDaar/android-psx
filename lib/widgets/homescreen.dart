@@ -26,14 +26,17 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/vault_three.png'),
+            Container(
+              width: double.infinity,
+              height: 600.0, // Specify the desired height
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/vault_three.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-            // Text(
-            //   'Welcome to PSX Management',
-            //   style: Theme.of(context).textTheme.displaySmall,
-            // ),
             SizedBox(
               height: 40,
             ),

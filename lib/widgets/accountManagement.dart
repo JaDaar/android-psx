@@ -2,22 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psx/models/psxUserInfo.dart';
 import 'package:psx/services/data_service.dart';
+import 'package:psx/services/database_service.dart';
 
 class AccountManagementPage extends StatefulWidget {
-  const AccountManagementPage({super.key});
+  final int id;
+  final String accountName;
+  final String login;
+  final String password;
+  const AccountManagementPage({
+    super.key,
+    this.id = -1,
+    this.accountName = '',
+    this.login = '',
+    this.password = '',
+  });
 
   @override
   State<AccountManagementPage> createState() => _AccountManagementPageState();
 }
 
 class _AccountManagementPageState extends State<AccountManagementPage> {
+  late DataBase handler;
   final DataService _dataService = DataService();
-
   var pageNavigationIndex = 0;
-  final psxAccountNameController = TextEditingController();
-  final psxNameController = TextEditingController();
-  // Create a TextEditingController for passwords
-  final psxController = TextEditingController();
+  late TextEditingController psxAccountNameController;
+  late TextEditingController psxNameController;
+  late TextEditingController psxController = TextEditingController();
   final psxValidationController = TextEditingController();
 
   bool _obscureText = true;
@@ -41,6 +51,10 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
   @override
   void initState() {
     super.initState();
+    psxAccountNameController = TextEditingController(text: widget.accountName);
+    psxNameController = TextEditingController(text: widget.login);
+    psxController = TextEditingController(text: widget.password);
+    handler = DataBase();
   }
 
   bool validatePasswords() {
@@ -72,11 +86,15 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
     return _obscureTextValidation ? Icons.visibility : Icons.visibility_off;
   }
 
-  void saveAndClearControls() {
+  Future<void> saveAndClearControls() async {
     //save into array
     var record = PSXUserInfo(
-        accountName: psxAccountName, login: psxNameText, password: psxCodeText);
+        id: 0,
+        accountName: psxAccountName,
+        login: psxNameText,
+        password: psxCodeText);
     _dataService.addPsxUserInfo(record);
+    await handler.addUserAccount(record);
 
     // Clear Controls of Data
     psxAccountName = '';

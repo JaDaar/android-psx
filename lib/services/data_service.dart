@@ -29,4 +29,12 @@ class DataService {
   void clearPsxUserInfo() {
     _psxUserInfo.clear();
   }
+
+  sendToUI(PSXUserInfo psxUserInfoInbound) {
+    return _psxUserInfo.firstWhere(
+      (userInfo) => userInfo.id == psxUserInfoInbound.id,
+      orElse: () =>
+          PSXUserInfo(id: -1, accountName: '', login: '', password: ''),
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psx/services/data_service.dart';
+import 'package:psx/services/database_service.dart';
 import 'package:psx/widgets/accountList.dart';
 import 'package:psx/widgets/accountManagement.dart';
 import 'package:psx/widgets/homescreen.dart';
@@ -16,11 +17,17 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   var navigationLandingIndex = 0;
   final DataService _dataService = DataService();
+  late DataBase handler;
 
   @override
   void initState() {
     super.initState();
     _dataService.setPsxUserInfo([]);
+    handler = DataBase();
+    handler.initializedDB().whenComplete(() async {
+      print('Database Initialization Complete');
+      setState(() {});
+    });
   }
 
   @override
