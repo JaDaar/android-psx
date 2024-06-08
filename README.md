@@ -18,20 +18,23 @@ It is designed to be run on the Android platform, but can also be executed on Wi
 2. One Page will be to add new information, the other page will be to list stored information.
 3. The user can scroll through the saved login/password combinations on another screen.
 
-## Version 3
+## Version 3 - COMPLETED
 1. Add Firebase Authentication to the system.  Initially support only email login.  - COMPLETED
-2. Store the information into SQLite with SQLCipher or Hive - Implement an encryption algorithm.
-3. Add edit/delete capability.
+2. Store the information into SQLite. - COMPLETED
 
 ## Version 4
+1. Add edit/delete capability. - DELETE COMPLETED, EDIT BUGGY
+2. Add SQLCipher Table or VLE encryption.
+
+## Version 5
 Add in search capability.
 
 
-## Version 4
+## Version 6
 1. Information is stored locally.
 2. Create an About Page, with Version Information.
 
-## Version 5
+## Version 7
 Store the information into the cloud.
 
 
