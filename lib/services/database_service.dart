@@ -142,4 +142,81 @@ class DataBase {
       await db.close();
     }
   }
+
+/*   Future<void> updateUserAccount(PSXUserInfo psxUserInfo) async {
+    String path = await getDatabasesPath();
+    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+
+    try {
+      // Create a map with the updated fields
+      Map<String, dynamic> updatedFields = {};
+
+      // Check each field and add it to the updatedFields map if it's not null
+      if (psxUserInfo.accountName != null) {
+        updatedFields['accountName'] = psxUserInfo.accountName;
+      }
+      if (psxUserInfo.login != null) {
+        updatedFields['login'] = psxUserInfo.login;
+      }
+      if (psxUserInfo.password != null) {
+        updatedFields['password'] = psxUserInfo.password;
+      }
+
+      // Update the record with the updatedFields map
+      await database.update(
+        '$DataBaseFile',
+        updatedFields,
+        where: 'id = ?',
+        whereArgs: [psxUserInfo.id],
+      );
+      print("Data updated successfully");
+    } catch (e) {
+      print("Error updating data: $e");
+    } finally {
+      await database.close();
+    }
+  } */
+
+  Future<void> updateUserAccount(PSXUserInfo psxUserInfo) async {
+    String path = await getDatabasesPath();
+    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+
+    try {
+      await database.update(
+        '$DataBaseFile',
+        psxUserInfo.toMap(),
+        where: 'id = ?',
+        whereArgs: [psxUserInfo.id],
+      );
+      print("Data updated successfully");
+    } catch (e) {
+      print("Error updating data: $e");
+    } finally {
+      await database.close();
+    }
+  }
+
+  Future<PSXUserInfo?> getUserAccountById(int id) async {
+    String path = await getDatabasesPath();
+    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+
+    try {
+      List<Map<String, dynamic>> results = await database.query(
+        '$DataBaseFile',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (results.isNotEmpty) {
+        return PSXUserInfo.fromMap(results.first);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Error retrieving data: $e");
+      return null;
+    } finally {
+      await database.close();
+    }
+  }
 }

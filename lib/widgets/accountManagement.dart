@@ -87,24 +87,41 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
   }
 
   Future<void> saveAndClearControls() async {
-    //save into array
-    var record = PSXUserInfo(
-        id: 0,
+    if (widget.id != null) {
+      // Retrieve the existing record from the database
+      PSXUserInfo? existingRecord =
+          await handler.getUserAccountById(widget.id!);
+
+      if (existingRecord != null) {
+        // Update the fields with the modified values
+        existingRecord.accountName = psxAccountName.isNotEmpty
+            ? psxAccountName
+            : existingRecord.accountName;
+        existingRecord.login =
+            psxNameText.isNotEmpty ? psxNameText : existingRecord.login;
+        existingRecord.password =
+            psxCodeText.isNotEmpty ? psxCodeText : existingRecord.password;
+
+        // Update the existing record in the database
+        await handler.updateUserAccount(existingRecord);
+      }
+    } else {
+      // Add new record
+      var newRecord = PSXUserInfo(
+        id: 0, // Set the id to null for new records
         accountName: psxAccountName,
         login: psxNameText,
-        password: psxCodeText);
-    _dataService.addPsxUserInfo(record);
-    await handler.addUserAccount(record);
+        password: psxCodeText,
+      );
+      await handler.addUserAccount(newRecord);
+    }
 
-    // Clear Controls of Data
-    psxAccountName = '';
-    psxAccountNameController.text = '';
-    psxCodeText = '';
-    psxCodeValidationText = '';
-    psxNameText = '';
-    psxNameController.text = '';
-    psxController.text = '';
-    psxValidationController.text = '';
+    // Clear the text controllers and navigate back
+    psxAccountNameController.clear();
+    psxNameController.clear();
+    psxController.clear();
+    psxValidationController.clear();
+    Navigator.pop(context);
   }
 
   @override
