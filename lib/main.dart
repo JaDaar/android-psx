@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -8,6 +10,7 @@ import 'package:psx/firebase_options.dart';
 import 'package:psx/widgets/auth_gate.dart';
 import 'package:psx/widgets/landing.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +18,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp()); // Replace 'MyApp' with your app's class name
 }
 

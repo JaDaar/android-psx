@@ -23,25 +23,27 @@ class HomeScreen extends StatelessWidget {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 600.0, // Specify the desired height
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/vault_three.png',
-                  fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 500.0, // Specify the desired height
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    'assets/vault_three.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            const SignOutButton(),
-          ],
+              SizedBox(
+                height: 40,
+              ),
+              const SignOutButton(),
+            ],
+          ),
         ),
       ),
     );

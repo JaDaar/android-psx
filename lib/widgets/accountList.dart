@@ -120,16 +120,6 @@ class _AccountListPageState extends State<AccountListPage> {
   }
 
   edit(PSXUserInfo psxUserInfo) {
-    print('edit card $psxUserInfo.id');
-    // String newAccountName = psxUserInfo.accountName;
-    // String newLogin = psxUserInfo.login;
-    // String newPassword = psxUserInfo.password;
-    // ds.sendToUI(PSXUserInfo(
-    //     id: psxUserInfo.id,
-    //     accountName: newAccountName,
-    //     login: newLogin,
-    //     password: newPassword));
-
     Navigator.push(
       context,
       MaterialPageRoute(

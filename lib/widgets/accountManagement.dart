@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psx/main.dart';
 import 'package:psx/models/psxUserInfo.dart';
 import 'package:psx/services/data_service.dart';
 import 'package:psx/services/database_service.dart';
+import 'package:psx/widgets/accountList.dart';
+import 'package:psx/widgets/homescreen.dart';
+import 'package:psx/widgets/landing.dart';
 
 class AccountManagementPage extends StatefulWidget {
   final int id;
@@ -28,7 +32,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
   late TextEditingController psxAccountNameController;
   late TextEditingController psxNameController;
   late TextEditingController psxController = TextEditingController();
-  final psxValidationController = TextEditingController();
+  late TextEditingController psxValidationController = TextEditingController();
 
   bool _obscureText = true;
   bool _obscureTextValidation = true;
@@ -54,6 +58,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
     psxAccountNameController = TextEditingController(text: widget.accountName);
     psxNameController = TextEditingController(text: widget.login);
     psxController = TextEditingController(text: widget.password);
+    psxValidationController = TextEditingController(text: widget.password);
     handler = DataBase();
   }
 
@@ -87,7 +92,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
   }
 
   Future<void> saveAndClearControls() async {
-    if (widget.id != null) {
+    if (widget.id != null && widget.id > 0) {
       // Retrieve the existing record from the database
       PSXUserInfo? existingRecord =
           await handler.getUserAccountById(widget.id!);
@@ -121,7 +126,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
     psxNameController.clear();
     psxController.clear();
     psxValidationController.clear();
-    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/');
   }
 
   @override

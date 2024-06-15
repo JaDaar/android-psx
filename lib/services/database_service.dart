@@ -1,13 +1,16 @@
+import 'dart:io';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:psx/models/psxUserInfo.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DataBase {
-  static const DataBaseFile = 'voute';
-
   Future<Database> initializedDB() async {
     String path = await getDatabasesPath();
-    print('Database path: $path');
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
+
     return openDatabase(
       join(path, '$DataBaseFile.db'),
       version: 2,
@@ -51,6 +54,8 @@ class DataBase {
 
   Future<void> addUserAccount(PSXUserInfo psxUserInfo) async {
     String path = await getDatabasesPath();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     Database database = await openDatabase(join(path, '$DataBaseFile.db'));
 
     print('Database insert path: $path');
@@ -71,6 +76,8 @@ class DataBase {
   Future<List<Map<String, dynamic>>> retrieveUserAccount() async {
     // Open the database
     String path = await getDatabasesPath();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     Database db = await openDatabase(
       join(path, '$DataBaseFile.db'),
     );
@@ -91,6 +98,8 @@ class DataBase {
 // delete user
   Future<void> deleteUserAccount(int id) async {
     final db = await initializedDB();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     await db.delete(
       '$DataBaseFile',
       where: "id = ?",
@@ -101,6 +110,8 @@ class DataBase {
   Future<void> deleteTable() async {
     // Open the database (assuming it's already created)
     String path = await getDatabasesPath();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     Database db = await openDatabase(
       join(path, '$DataBaseFile.db'),
     );
@@ -118,6 +129,8 @@ class DataBase {
 
   Future<void> updateRecord(
       int id, String accountName, String login, String password) async {
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     // Get a reference to the database
     Database db = await openDatabase('$DataBaseFile.db');
 
@@ -179,6 +192,8 @@ class DataBase {
 
   Future<void> updateUserAccount(PSXUserInfo psxUserInfo) async {
     String path = await getDatabasesPath();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     Database database = await openDatabase(join(path, '$DataBaseFile.db'));
 
     try {
@@ -198,6 +213,8 @@ class DataBase {
 
   Future<PSXUserInfo?> getUserAccountById(int id) async {
     String path = await getDatabasesPath();
+    String? password = dotenv.env['DB_PASSWORD'];
+    String? DataBaseFile = dotenv.env['DBName'];
     Database database = await openDatabase(join(path, '$DataBaseFile.db'));
 
     try {
