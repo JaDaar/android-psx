@@ -3,17 +3,19 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:psx/models/psxUserInfo.dart';
-import 'package:sqflite/sqflite.dart';
+//import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_sqlcipher/sqflite.dart';
 
 class DataBase {
   Future<Database> initializedDB() async {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-
-    return openDatabase(
-      join(path, '$DataBaseFile.db'),
-      version: 2,
+    String databasePath = '$path/$DataBaseFile.db';
+    Database database = await openDatabase(
+      databasePath,
+      password: password,
+      version: 3,
       onCreate: (Database db, int version) async {
         try {
           // Create the table
@@ -50,13 +52,16 @@ class DataBase {
         }
       },
     );
+    return database;
   }
 
   Future<void> addUserAccount(PSXUserInfo psxUserInfo) async {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+    String databasePath = '$path/$DataBaseFile';
+    Database database =
+        await openDatabase(join(path, '$DataBaseFile.db'), password: password);
 
     print('Database insert path: $path');
     try {
@@ -78,9 +83,8 @@ class DataBase {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-    Database db = await openDatabase(
-      join(path, '$DataBaseFile.db'),
-    );
+    Database db =
+        await openDatabase(join(path, '$DataBaseFile.db'), password: password);
 
     try {
       // Query the table and retrieve the results
@@ -112,9 +116,8 @@ class DataBase {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-    Database db = await openDatabase(
-      join(path, '$DataBaseFile.db'),
-    );
+    Database db =
+        await openDatabase(join(path, '$DataBaseFile.db'), password: password);
 
     try {
       // Execute the DROP TABLE command
@@ -132,7 +135,7 @@ class DataBase {
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
     // Get a reference to the database
-    Database db = await openDatabase('$DataBaseFile.db');
+    Database db = await openDatabase('$DataBaseFile.db', password: password);
 
     // Define the updated data as a Map
     Map<String, dynamic> updatedData = {
@@ -156,45 +159,12 @@ class DataBase {
     }
   }
 
-/*   Future<void> updateUserAccount(PSXUserInfo psxUserInfo) async {
-    String path = await getDatabasesPath();
-    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
-
-    try {
-      // Create a map with the updated fields
-      Map<String, dynamic> updatedFields = {};
-
-      // Check each field and add it to the updatedFields map if it's not null
-      if (psxUserInfo.accountName != null) {
-        updatedFields['accountName'] = psxUserInfo.accountName;
-      }
-      if (psxUserInfo.login != null) {
-        updatedFields['login'] = psxUserInfo.login;
-      }
-      if (psxUserInfo.password != null) {
-        updatedFields['password'] = psxUserInfo.password;
-      }
-
-      // Update the record with the updatedFields map
-      await database.update(
-        '$DataBaseFile',
-        updatedFields,
-        where: 'id = ?',
-        whereArgs: [psxUserInfo.id],
-      );
-      print("Data updated successfully");
-    } catch (e) {
-      print("Error updating data: $e");
-    } finally {
-      await database.close();
-    }
-  } */
-
   Future<void> updateUserAccount(PSXUserInfo psxUserInfo) async {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+    Database database =
+        await openDatabase(join(path, '$DataBaseFile.db'), password: password);
 
     try {
       await database.update(
@@ -215,7 +185,8 @@ class DataBase {
     String path = await getDatabasesPath();
     String? password = dotenv.env['DB_PASSWORD'];
     String? DataBaseFile = dotenv.env['DBName'];
-    Database database = await openDatabase(join(path, '$DataBaseFile.db'));
+    Database database =
+        await openDatabase(join(path, '$DataBaseFile.db'), password: password);
 
     try {
       List<Map<String, dynamic>> results = await database.query(
@@ -235,5 +206,14 @@ class DataBase {
     } finally {
       await database.close();
     }
+  }
+
+  Future<void> deleteEncryptedDatabase() async {
+    var databasesPath = await getDatabasesPath();
+    String? DataBaseFile = dotenv.env['DBName'];
+    var databaseFilePath = join(databasesPath, '$DataBaseFile.db');
+
+    await deleteDatabase(databaseFilePath);
+    print('Database deleted successfully');
   }
 }

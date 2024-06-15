@@ -22,19 +22,24 @@ It is designed to be run on the Android platform, but can also be executed on Wi
 1. Add Firebase Authentication to the system.  Initially support only email login.  - COMPLETED
 2. Store the information into SQLite. - COMPLETED
 
-## Version 4
-1. Add edit/delete capability. - DELETE COMPLETED, EDIT BUGGY
+## Version 4 - COMPLETED
+1. Add edit/delete capability.
 2. Add SQLCipher Table or VLE encryption.
+3. Add safe storage of application information.
 
 ## Version 5
 Add in search capability.
 
 
 ## Version 6
-1. Information is stored locally.
+1. Information is stored locally. - COMPLETE
 2. Create an About Page, with Version Information.
 
 ## Version 7
 Store the information into the cloud.
 
+## Version 8
+1. Add Hotmail/Bing/Outlook Authentication
+2. Add Yahoo Authentication
+3. Add FaceBook Authentication
 

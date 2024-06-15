@@ -37,13 +37,10 @@ class _LandingPageState extends State<LandingPage> {
       case 0:
         //page = Placeholder();
         page = HomeScreen();
-        break;
       case 1:
         page = AccountListPage();
-        break;
       case 2:
         page = AccountManagementPage();
-        break;
       default:
         throw UnimplementedError('no widget for $navigationLandingIndex');
     }
